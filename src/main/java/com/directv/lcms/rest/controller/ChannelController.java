@@ -1,5 +1,6 @@
 package com.directv.lcms.rest.controller;
 
+import com.directv.lcms.couchbase.ChannelRepositoryService;
 import com.directv.lcms.dto.Channel;
 import com.directv.lcms.dto.MultiViewer;
 import io.swagger.annotations.Api;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ChannelController {
     private static final Logger log = LoggerFactory.getLogger(ChannelController.class);
+
+    @Autowired
+    private ChannelRepositoryService channelRepositoryService;
 
     @RequestMapping(value = "/{version}/channel", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new channel and places it in the Control System channel inventory.",
@@ -40,6 +45,7 @@ public class ChannelController {
         channel.setCallLetters(callLetters);
         channel.setCcid(ccid);
         channel.setEnvironment(environment);
+        channelRepositoryService.create(channel);
         return channel;
     }
 
