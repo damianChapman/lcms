@@ -27,15 +27,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(value = "Multiviewer API")
-@RequestMapping("/api")
-public class MultiViewerController {
-    private static final Logger log = LoggerFactory.getLogger(MultiViewerController.class);
+@Api(value = "Multiviewer API V1")
+@RequestMapping("/api/v1")
+public class MultiViewerControllerV1 {
+    private static final Logger log = LoggerFactory.getLogger(MultiViewerControllerV1.class);
 
     @Resource
     public MultiViewerService multiViewerService;
 
-    @RequestMapping(value = "/{version}/multiviewer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new multiviewer and places it in the Control System multiviewer inventory.",
             notes = "")
     private MultiViewer createMultiViewer(@PathVariable String version,
@@ -53,7 +53,7 @@ public class MultiViewerController {
         return multiViewer;
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates a multiviewer in the Control System multiviewer inventory.",
             notes = "At least one parameter is required for successful update.")
     private MultiViewer updateMultiViewer(@PathVariable String version,
@@ -71,25 +71,25 @@ public class MultiViewerController {
         return multiViewer;
     }
 
-    @RequestMapping(value = "/{version}/multiviewers", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewers", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes all multiviewers in the Control System multiviewer inventory.",
             notes = "")
     private ResponseEntity deleteAllMultiViewers() {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes one multiviewer from the Control System multiviewer inventory.",
             notes = "")
     private ResponseEntity deleteMultiViewer(@PathVariable String name) {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 mosaic.",
             notes = "")
     private ResponseEntity<EncoderStatus> getMosaic(@ApiParam(value = "id of multiviewer mosaic.")
-                                                               @PathVariable String id) {
+                                                    @PathVariable String id) {
         Optional<EncoderStatus> encoderStatus = multiViewerService.getMosaic(id);
         if (encoderStatus.isPresent()) {
             return ResponseEntity.ok(encoderStatus.get());
@@ -98,7 +98,7 @@ public class MultiViewerController {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Posts the TAG MCM-9000 scan task.",
             notes = "")
     private ResponseEntity postScanTask(@ApiParam(value = "scan task.")
@@ -111,7 +111,7 @@ public class MultiViewerController {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets the TAG MCM-9000 channel configurations.",
             notes = "")
     private ResponseEntity getChannelConfigurations() {
@@ -123,7 +123,7 @@ public class MultiViewerController {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 output layout.",
             notes = "")
     private ResponseEntity<Layout> getOutputLayout(@ApiParam(value = "id of multiviewer output layout.")
@@ -136,11 +136,11 @@ public class MultiViewerController {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 encoder.",
             notes = "")
     private ResponseEntity<Encoder> getEncoder(@ApiParam(value = "id of multiviewer encoder.")
-                                                   @PathVariable String id) {
+                                               @PathVariable String id) {
         Optional<Encoder> encoder = multiViewerService.getEncoder(id);
         if (encoder.isPresent()) {
             return ResponseEntity.ok(encoder.get());
@@ -149,7 +149,7 @@ public class MultiViewerController {
         }
     }
 
-    private void validate(@RequestParam(value = "function", required = false) String function, @RequestParam(value = "manifestUrl", required = false) String manifestUrl) {
+    private void validate(String function, String manifestUrl) {
         if (StringUtils.isBlank(function) && StringUtils.isBlank(manifestUrl)) {
             throw new IllegalArgumentException("At least one parameter is required for successful update.");
         }

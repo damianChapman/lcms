@@ -1,17 +1,16 @@
 package com.directv.lcms.dto;
 
-import com.couchbase.client.java.repository.annotation.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 
 import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.UNIQUE;
-import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.USE_ATTRIBUTES;
 
 @Document
 public class Channel {
 
-    @Id @GeneratedValue(strategy = UNIQUE)
+    @Id
+    @GeneratedValue(strategy = UNIQUE)
     private String id;
     private String name;
     private String callLetters;
@@ -20,6 +19,17 @@ public class Channel {
     private String key;
     private String primarySourceIPAddress;
     private String backupSourceIPAddress;
+
+    private String primaryGroupIPAddress;
+    private String backupGroupIPAddress;
+    private String primaryPortNumber;
+    private String backupPortNumber;
+    private String primaryMPEGProgramNumber;
+    private String backupMPEGProgramNumber;
+    private String hlsTvUrl;
+    private String hlsMobileUrl;
+    private String dashTvUrl;
+    private String dashMobileUrl;
 
     public String getId() {
         return id;
@@ -164,15 +174,4 @@ public class Channel {
     public void setDashMobileUrl(String dashMobileUrl) {
         this.dashMobileUrl = dashMobileUrl;
     }
-
-    private String primaryGroupIPAddress;
-    private String backupGroupIPAddress;
-    private String primaryPortNumber;
-    private String backupPortNumber;
-    private String primaryMPEGProgramNumber;
-    private String backupMPEGProgramNumber;
-    private String hlsTvUrl;
-    private String hlsMobileUrl;
-    private String dashTvUrl;
-    private String dashMobileUrl;
 }

@@ -2,7 +2,6 @@ package com.directv.lcms.rest.controller;
 
 import com.directv.lcms.couchbase.ChannelRepositoryService;
 import com.directv.lcms.dto.Channel;
-import com.directv.lcms.dto.MultiViewer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(value = "Channel API")
-@RequestMapping("/api")
-public class ChannelController {
-    private static final Logger log = LoggerFactory.getLogger(ChannelController.class);
+@Api(value = "Channel API V1")
+@RequestMapping("/api/v1")
+public class ChannelControllerV1 {
+    private static final Logger log = LoggerFactory.getLogger(ChannelControllerV1.class);
 
     @Autowired
     private ChannelRepositoryService channelRepositoryService;
@@ -84,9 +83,7 @@ public class ChannelController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    private void validate(@RequestParam(value = "callLetters", required = false) String callLetters,
-                          @RequestParam(value = "ccid", required = false) String ccid,
-                          @RequestParam(value = "environment", required = false) String environment) {
+    private void validate(String callLetters, String ccid, String environment) {
         if (StringUtils.isBlank(callLetters) && StringUtils.isBlank(ccid) && StringUtils.isBlank(environment)) {
             throw new IllegalArgumentException("At least one parameter is required for successful update.");
         }

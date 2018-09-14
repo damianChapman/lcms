@@ -1,6 +1,5 @@
 package com.directv.lcms.rest.controller;
 
-import com.directv.lcms.dto.Channel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(value = "Channel API")
-@RequestMapping("/api")
-public class ChannelTuningController {
-    private static final Logger log = LoggerFactory.getLogger(ChannelTuningController.class);
+@Api(value = "Channel Tunning API V1")
+@RequestMapping("/api/v1")
+public class ChannelTuningControllerV1 {
+    private static final Logger log = LoggerFactory.getLogger(ChannelTuningControllerV1.class);
 
-    @RequestMapping(value = "/{version}/tune/thread", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/tune/thread", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Populates a thread multiviewer with video associated with the channel.  " +
             "Routes audio and video from the thread multiviewer to its TS output.",
             notes = "")
@@ -34,7 +33,7 @@ public class ChannelTuningController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/tune/monwall", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/tune/monwall", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Places a single video feed in any of monitor wall multiviewer window and identifies it using custom text.",
             notes = "")
     private ResponseEntity tuneMonitorWall(@PathVariable String version,
@@ -49,7 +48,7 @@ public class ChannelTuningController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/tune/audiomon", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/tune/audiomon", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Routes audio and video from the thread multiviewer to its TS output.",
             notes = "")
     private ResponseEntity tuneAudioMonitor(@PathVariable String version,

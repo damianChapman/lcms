@@ -1,6 +1,7 @@
 package com.directv.lcms.dto;
 
 public class ChannelProfile {
+
     private float id;
     private String title;
     private float notification_set_id;
@@ -8,9 +9,6 @@ public class ChannelProfile {
     private float is_default;
     private float is_scanned;
     private float is_scrambled;
-
-
-    // Getter Methods
 
     public float getId() {
         return id;
@@ -39,8 +37,6 @@ public class ChannelProfile {
     public float getIs_scrambled() {
         return is_scrambled;
     }
-
-    // Setter Methods
 
     public void setId(float id) {
         this.id = id;
