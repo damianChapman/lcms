@@ -23,8 +23,7 @@ public class ChannelTuningControllerV1 {
     @ApiOperation(value = "Populates a thread multiviewer with video associated with the channel.  " +
             "Routes audio and video from the thread multiviewer to its TS output.",
             notes = "")
-    private ResponseEntity tuneThread(@PathVariable String version,
-                                      @ApiParam(value = "Name of channel.")
+    private ResponseEntity tuneThread(@ApiParam(value = "Name of channel.")
                                       @RequestParam String channel,
                                       @ApiParam(value = "Name of multiviewer.")
                                       @RequestParam String multiviewer,
@@ -36,8 +35,7 @@ public class ChannelTuningControllerV1 {
     @RequestMapping(value = "/tune/monwall", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Places a single video feed in any of monitor wall multiviewer window and identifies it using custom text.",
             notes = "")
-    private ResponseEntity tuneMonitorWall(@PathVariable String version,
-                                           @ApiParam(value = "Name of feed.")
+    private ResponseEntity tuneMonitorWall(@ApiParam(value = "Name of feed.")
                                            @RequestParam String feed,
                                            @ApiParam(value = "Name of multiviewer.")
                                            @RequestParam String multiviewer,
@@ -51,8 +49,7 @@ public class ChannelTuningControllerV1 {
     @RequestMapping(value = "/tune/audiomon", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Routes audio and video from the thread multiviewer to its TS output.",
             notes = "")
-    private ResponseEntity tuneAudioMonitor(@PathVariable String version,
-                                            @ApiParam(value = "Name of feed.")
+    private ResponseEntity tuneAudioMonitor(@ApiParam(value = "Name of feed.")
                                             @RequestParam String channel,
                                             @ApiParam(value = "Name of multiviewer.")
                                             @RequestParam String multiviewer,

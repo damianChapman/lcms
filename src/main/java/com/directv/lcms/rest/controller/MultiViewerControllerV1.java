@@ -38,8 +38,7 @@ public class MultiViewerControllerV1 {
     @RequestMapping(value = "/multiviewer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new multiviewer and places it in the Control System multiviewer inventory.",
             notes = "")
-    private MultiViewer createMultiViewer(@PathVariable String version,
-                                          @ApiParam(value = "Name of multiviewer.")
+    private MultiViewer createMultiViewer(@ApiParam(value = "Name of multiviewer.")
                                           @RequestParam String name,
                                           @ApiParam(value = "Primary function of multiviewer.")
                                           @RequestParam String function,
@@ -56,8 +55,7 @@ public class MultiViewerControllerV1 {
     @RequestMapping(value = "/multiviewer/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates a multiviewer in the Control System multiviewer inventory.",
             notes = "At least one parameter is required for successful update.")
-    private MultiViewer updateMultiViewer(@PathVariable String version,
-                                          @ApiParam(value = "Name of multiviewer.")
+    private MultiViewer updateMultiViewer(@ApiParam(value = "Name of multiviewer.")
                                           @PathVariable String name,
                                           @ApiParam(value = "Primary function of multiviewer.")
                                           @RequestParam(value = "function", required = false) String function,

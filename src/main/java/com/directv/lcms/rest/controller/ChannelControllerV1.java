@@ -26,11 +26,10 @@ public class ChannelControllerV1 {
     @Autowired
     private ChannelRepositoryService channelRepositoryService;
 
-    @RequestMapping(value = "/{version}/channel", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new channel and places it in the Control System channel inventory.",
             notes = "Parameter list is incomplete.")
-    private Channel createChannel(@PathVariable String version,
-                                  @ApiParam(value = "Channel name.")
+    private Channel createChannel(@ApiParam(value = "Channel name.")
                                   @RequestParam String name,
                                   @ApiParam(value = "Channel call letters.")
                                   @RequestParam String callLetters,
@@ -48,11 +47,10 @@ public class ChannelControllerV1 {
         return channel;
     }
 
-    @RequestMapping(value = "/{version}/channel/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates a channel in the Control System channel inventory.",
             notes = "At least one parameter is required for successful update. Parameter list is incomplete.")
-    private Channel updateChannel(@PathVariable String version,
-                                  @ApiParam(value = "Channel name.")
+    private Channel updateChannel(@ApiParam(value = "Channel name.")
                                   @PathVariable String name,
                                   @ApiParam(value = "Channel call letters.")
                                   @RequestParam String callLetters,
@@ -69,14 +67,14 @@ public class ChannelControllerV1 {
         return channel;
     }
 
-    @RequestMapping(value = "/{version}/channels", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channels", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes all channels in the Control System channel inventory.",
             notes = "")
     private ResponseEntity deleteAllChannels() {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/channel/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes one channel from the Control System channel inventory.",
             notes = "")
     private ResponseEntity deleteChannel(@PathVariable String name) {
