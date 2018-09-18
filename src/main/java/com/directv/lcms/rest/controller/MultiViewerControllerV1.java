@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,9 +84,10 @@ public class MultiViewerControllerV1 {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/multiviewer/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 mosaic.",
             notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity<EncoderStatus> getMosaic(@ApiParam(value = "id of multiviewer mosaic.")
                                                     @PathVariable String id) {
         Optional<EncoderStatus> encoderStatus = multiViewerService.getMosaic(id);
@@ -96,9 +98,10 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/multiviewer/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Posts the TAG MCM-9000 scan task.",
             notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity postScanTask(@ApiParam(value = "scan task.")
                                         @RequestBody ScanTask scanTask) {
         Optional<ScanTask> task = multiViewerService.createScannerTask(scanTask);
@@ -109,9 +112,10 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/multiviewer/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets the TAG MCM-9000 channel configurations.",
             notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity getChannelConfigurations() {
         Optional<List<ChannelSource>> configurations = multiViewerService.getChannelConfigurations();
         if (configurations.isPresent()) {
@@ -121,9 +125,10 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/multiviewer/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 output layout.",
             notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity<Layout> getOutputLayout(@ApiParam(value = "id of multiviewer output layout.")
                                                    @PathVariable String id) {
         Optional<Layout> layout = multiViewerService.getOutputLayout(id);
@@ -134,9 +139,10 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/multiviewer/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 encoder.",
             notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity<Encoder> getEncoder(@ApiParam(value = "id of multiviewer encoder.")
                                                @PathVariable String id) {
         Optional<Encoder> encoder = multiViewerService.getEncoder(id);

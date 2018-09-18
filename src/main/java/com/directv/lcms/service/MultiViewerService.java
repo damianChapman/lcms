@@ -93,8 +93,9 @@ public class MultiViewerService {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(channelConfigUrl, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONArray jsonArray = new JSONArray(responseEntity.getBody());
-                for(Object jsonObject : jsonArray) {
-                    ChannelSource channelSource = objectMapper.readValue(((JSONObject) jsonObject).get("ChannelSource").toString(), ChannelSource.class);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    ChannelSource channelSource = objectMapper.readValue(jsonObject.get("ChannelSource").toString(), ChannelSource.class);
                     channelSourceList.add(channelSource);
                 }
                 return Optional.of(channelSourceList);
