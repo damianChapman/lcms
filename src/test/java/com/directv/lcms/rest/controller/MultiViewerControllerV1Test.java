@@ -23,10 +23,10 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MultiViewerControllerTest {
+public class MultiViewerControllerV1Test {
 
     @Autowired
-    private MultiViewerController multiViewerController;
+    private MultiViewerControllerV1 multiViewerController;
 
     @Autowired
     private MultiViewerService multiViewerService;

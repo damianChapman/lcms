@@ -84,7 +84,7 @@ public class MultiViewerControllerV1 {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/tag/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 mosaic.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -98,7 +98,7 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/tag/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/scantask", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Posts the TAG MCM-9000 scan task.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -112,7 +112,7 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/tag/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/channel/configurations", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets the TAG MCM-9000 channel configurations.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -125,7 +125,7 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/tag/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/output/layout/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 output layout.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -139,7 +139,7 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/tag/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/tag/encoder/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 encoder.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
