@@ -28,19 +28,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(value = "Multiviewer API")
-@RequestMapping("/api")
-public class MultiViewerController {
-    private static final Logger log = LoggerFactory.getLogger(MultiViewerController.class);
+@Api(value = "Multiviewer API V1")
+@RequestMapping("/api/v1")
+public class MultiViewerControllerV1 {
+    private static final Logger log = LoggerFactory.getLogger(MultiViewerControllerV1.class);
 
     @Resource
     public MultiViewerService multiViewerService;
 
-    @RequestMapping(value = "/{version}/multiviewer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new multiviewer and places it in the Control System multiviewer inventory.",
             notes = "")
-    private MultiViewer createMultiViewer(@PathVariable String version,
-                                          @ApiParam(value = "Name of multiviewer.")
+    private MultiViewer createMultiViewer(@ApiParam(value = "Name of multiviewer.")
                                           @RequestParam String name,
                                           @ApiParam(value = "Primary function of multiviewer.")
                                           @RequestParam String function,
@@ -54,11 +53,10 @@ public class MultiViewerController {
         return multiViewer;
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates a multiviewer in the Control System multiviewer inventory.",
             notes = "At least one parameter is required for successful update.")
-    private MultiViewer updateMultiViewer(@PathVariable String version,
-                                          @ApiParam(value = "Name of multiviewer.")
+    private MultiViewer updateMultiViewer(@ApiParam(value = "Name of multiviewer.")
                                           @PathVariable String name,
                                           @ApiParam(value = "Primary function of multiviewer.")
                                           @RequestParam(value = "function", required = false) String function,
@@ -72,14 +70,14 @@ public class MultiViewerController {
         return multiViewer;
     }
 
-    @RequestMapping(value = "/{version}/multiviewers", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewers", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes all multiviewers in the Control System multiviewer inventory.",
             notes = "")
     private ResponseEntity deleteAllMultiViewers() {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/multiviewer/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/multiviewer/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes one multiviewer from the Control System multiviewer inventory.",
             notes = "")
     private ResponseEntity deleteMultiViewer(@PathVariable String name) {
@@ -91,7 +89,7 @@ public class MultiViewerController {
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity<EncoderStatus> getMosaic(@ApiParam(value = "id of multiviewer mosaic.")
-                                                               @PathVariable String id) {
+                                                    @PathVariable String id) {
         Optional<EncoderStatus> encoderStatus = multiViewerService.getMosaic(id);
         if (encoderStatus.isPresent()) {
             return ResponseEntity.ok(encoderStatus.get());
@@ -146,7 +144,7 @@ public class MultiViewerController {
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
     private ResponseEntity<Encoder> getEncoder(@ApiParam(value = "id of multiviewer encoder.")
-                                                   @PathVariable String id) {
+                                               @PathVariable String id) {
         Optional<Encoder> encoder = multiViewerService.getEncoder(id);
         if (encoder.isPresent()) {
             return ResponseEntity.ok(encoder.get());
@@ -155,7 +153,7 @@ public class MultiViewerController {
         }
     }
 
-    private void validate(@RequestParam(value = "function", required = false) String function, @RequestParam(value = "manifestUrl", required = false) String manifestUrl) {
+    private void validate(String function, String manifestUrl) {
         if (StringUtils.isBlank(function) && StringUtils.isBlank(manifestUrl)) {
             throw new IllegalArgumentException("At least one parameter is required for successful update.");
         }

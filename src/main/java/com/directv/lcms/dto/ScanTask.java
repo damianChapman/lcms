@@ -2,33 +2,19 @@ package com.directv.lcms.dto;
 
 public class ScanTask {
     private String progress;
-
     private String ip_address_from;
-
     private String status;
-
     private String ssm_to;
-
     private String port_to;
-
     private String mode_id;
-
     private String device_id;
-
     private String ip_address_to;
-
     private String modified;
-
     private String port_from;
-
     private String id;
-
     private String network_id;
-
     private String created;
-
     private String ssm_from;
-
     private String time_remained;
 
     public String getProgress() {

@@ -2,7 +2,6 @@ package com.directv.lcms.rest.controller;
 
 import com.directv.lcms.couchbase.ChannelRepositoryService;
 import com.directv.lcms.dto.Channel;
-import com.directv.lcms.dto.MultiViewer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,19 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(value = "Channel API")
-@RequestMapping("/api")
-public class ChannelController {
-    private static final Logger log = LoggerFactory.getLogger(ChannelController.class);
+@Api(value = "Channel API V1")
+@RequestMapping("/api/v1")
+public class ChannelControllerV1 {
+    private static final Logger log = LoggerFactory.getLogger(ChannelControllerV1.class);
 
     @Autowired
     private ChannelRepositoryService channelRepositoryService;
 
-    @RequestMapping(value = "/{version}/channel", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Creates a new channel and places it in the Control System channel inventory.",
             notes = "Parameter list is incomplete.")
-    private Channel createChannel(@PathVariable String version,
-                                  @ApiParam(value = "Channel name.")
+    private Channel createChannel(@ApiParam(value = "Channel name.")
                                   @RequestParam String name,
                                   @ApiParam(value = "Channel call letters.")
                                   @RequestParam String callLetters,
@@ -49,11 +47,10 @@ public class ChannelController {
         return channel;
     }
 
-    @RequestMapping(value = "/{version}/channel/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel/{name}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates a channel in the Control System channel inventory.",
             notes = "At least one parameter is required for successful update. Parameter list is incomplete.")
-    private Channel updateChannel(@PathVariable String version,
-                                  @ApiParam(value = "Channel name.")
+    private Channel updateChannel(@ApiParam(value = "Channel name.")
                                   @PathVariable String name,
                                   @ApiParam(value = "Channel call letters.")
                                   @RequestParam String callLetters,
@@ -70,23 +67,21 @@ public class ChannelController {
         return channel;
     }
 
-    @RequestMapping(value = "/{version}/channels", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channels", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes all channels in the Control System channel inventory.",
             notes = "")
     private ResponseEntity deleteAllChannels() {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{version}/channel/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/channel/{name}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Deletes one channel from the Control System channel inventory.",
             notes = "")
     private ResponseEntity deleteChannel(@PathVariable String name) {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    private void validate(@RequestParam(value = "callLetters", required = false) String callLetters,
-                          @RequestParam(value = "ccid", required = false) String ccid,
-                          @RequestParam(value = "environment", required = false) String environment) {
+    private void validate(String callLetters, String ccid, String environment) {
         if (StringUtils.isBlank(callLetters) && StringUtils.isBlank(ccid) && StringUtils.isBlank(environment)) {
             throw new IllegalArgumentException("At least one parameter is required for successful update.");
         }

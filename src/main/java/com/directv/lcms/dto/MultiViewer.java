@@ -7,7 +7,6 @@ import org.springframework.data.couchbase.core.mapping.Document;
 
 @Document
 public class MultiViewer {
-
     @Id
     private String id;
     private String name;
