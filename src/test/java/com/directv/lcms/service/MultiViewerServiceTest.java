@@ -32,6 +32,10 @@ public class MultiViewerServiceTest {
     }
 
     @Test
+    public void getOutputLayouts() {
+    }
+
+    @Test
     public void getEncoder() {
     }
 }
