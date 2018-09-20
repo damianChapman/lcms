@@ -116,7 +116,7 @@ public class MultiViewerControllerV1 {
     @ApiOperation(value = "Gets the TAG MCM-9000 channel configurations.",
             notes = "")
     @PreAuthorize("hasRole('ROLE_USER')")
-    private ResponseEntity getChannelConfigurations() {
+    private ResponseEntity<List<ChannelSource>> getChannelConfigurations() {
         Optional<List<ChannelSource>> configurations = multiViewerService.getChannelConfigurations();
         if (configurations.isPresent()) {
             return ResponseEntity.ok(configurations.get());
