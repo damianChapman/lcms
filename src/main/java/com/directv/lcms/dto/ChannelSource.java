@@ -1,7 +1,9 @@
 package com.directv.lcms.dto;
 
+import java.util.List;
+
 public class ChannelSource {
-    private ChannelProfile[] channelProfile;
+    private List<ChannelProfile> channelProfile;
     private String port;
     private String standard_type_id;
     private String device_id;
@@ -20,11 +22,11 @@ public class ChannelSource {
     private String uuid;
     private String note;
 
-    public ChannelProfile[] getChannelProfile() {
+    public List<ChannelProfile> getChannelProfile() {
         return channelProfile;
     }
 
-    public void setChannelProfile(ChannelProfile[] channelProfile) {
+    public void setChannelProfile(List<ChannelProfile> channelProfile) {
         this.channelProfile = channelProfile;
     }
 

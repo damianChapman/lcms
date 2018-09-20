@@ -158,4 +158,18 @@ public class MultiViewerControllerV1 {
             throw new IllegalArgumentException("At least one parameter is required for successful update.");
         }
     }
+
+    @RequestMapping(value = "/multiviewer/tag/output/layouts", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Gets TAG MCM-9000 output layouts.",
+            notes = "")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    private ResponseEntity<List<Layout>> getOutputLayouts() {
+        Optional<List<Layout>> layoutList = multiViewerService.getOutputLayouts();
+        if (layoutList.isPresent()) {
+            return ResponseEntity.ok(layoutList.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 }

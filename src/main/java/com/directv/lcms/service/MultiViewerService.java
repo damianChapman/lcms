@@ -1,5 +1,6 @@
 package com.directv.lcms.service;
 
+import com.directv.lcms.dto.ChannelProfile;
 import com.directv.lcms.dto.ChannelSource;
 import com.directv.lcms.dto.Encoder;
 import com.directv.lcms.dto.EncoderStatus;
@@ -15,7 +16,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -50,6 +50,9 @@ public class MultiViewerService {
 
     @Value("${tag.output.layout.url}")
     private String outputLayoutUrl;
+
+    @Value("${tag.output.layouts.url}")
+    private String outputLayoutsUrl;
 
     @Value("${tag.encoder.url}")
     private String encoderUrl;
@@ -95,7 +98,15 @@ public class MultiViewerService {
                 JSONArray jsonArray = new JSONArray(responseEntity.getBody());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    ChannelSource channelSource = objectMapper.readValue(jsonObject.get("ChannelSource").toString(), ChannelSource.class);
+                    JSONObject channelSourceJson = (JSONObject) jsonObject.get("ChannelSource");
+                    ChannelSource channelSource = objectMapper.readValue(channelSourceJson.toString(), ChannelSource.class);
+                    List<ChannelProfile> channelProfileList = new ArrayList<>();
+                    JSONArray channelProfiles = channelSourceJson.getJSONArray("ChannelProfile");
+                    for ( int j = 0; j < channelProfiles.length(); j++) {
+                        ChannelProfile channelProfile = objectMapper.readValue(channelProfiles.get(j).toString(), ChannelProfile.class);
+                        channelProfileList.add(channelProfile);
+                    }
+                    channelSource.setChannelProfile(channelProfileList);
                     channelSourceList.add(channelSource);
                 }
                 return Optional.of(channelSourceList);
@@ -135,6 +146,40 @@ public class MultiViewerService {
             }
         } catch (IOException e) {
             log.error("Error getting multiviewer output layout", e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<List<Layout>> getOutputLayouts() {
+        List<Layout> layoutList = new ArrayList<>();
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(outputLayoutsUrl, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONArray layouts = new JSONArray(responseEntity.getBody());
+                for (int i = 0; i < layouts.length(); i++) {
+                    List<Encoder> encoderList = new ArrayList<>();
+                    List<LayoutBox> layoutBoxesList = new ArrayList<>();
+                    JSONObject layoutJsonObject = (JSONObject) layouts.get(i);
+                    JSONObject layoutJson = (JSONObject) layoutJsonObject.get("Layout");
+                    Layout layout = objectMapper.readValue(layoutJson.toString(), Layout.class);
+                    JSONArray encoders = layoutJson.getJSONArray("Encoders");
+                    for (int j = 0; j < encoders.length(); j++) {
+                        encoderList.add(objectMapper.readValue(encoders.get(j).toString(), Encoder.class));
+                    }
+                    JSONArray layoutBoxes = layoutJson.getJSONArray("LayoutBoxes");
+                    for (int k = 0; k < layoutBoxes.length(); k++) {
+                        layoutBoxesList.add(objectMapper.readValue(layoutBoxes.get(k).toString(), LayoutBox.class));
+                    }
+                    layout.setEncoders(encoderList);
+                    layout.setLayoutBoxes(layoutBoxesList);
+                    layoutList.add(layout);
+                }
+                return Optional.of(layoutList);
+            } else {
+                return Optional.empty();
+            }
+        } catch (IOException e) {
+            log.error("Error getting multiviewer output layouts", e);
         }
         return Optional.empty();
     }
