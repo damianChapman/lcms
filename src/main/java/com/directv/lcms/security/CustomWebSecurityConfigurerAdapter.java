@@ -48,6 +48,8 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .antMatchers("/api/v1/configuration/**").permitAll()
                 .antMatchers("/api/v1/multiviewer/**").permitAll()
                 .antMatchers("/api/v1/multiviewers/**").permitAll()
+                .antMatchers("/**/swagger-resources/**").permitAll()
+                .antMatchers("/**/swagger-ui.html*").permitAll()
                 .antMatchers("/api/v1/multiviewer/tag/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
