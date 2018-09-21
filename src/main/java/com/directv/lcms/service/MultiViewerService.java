@@ -17,9 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +58,17 @@ public class MultiViewerService {
 
     @Value("${tag.encoder.url}")
     private String encoderUrl;
+
+    @Value("${tag.username}")
+    private String username;
+
+    @Value("${tag.password}")
+    private String password;
+
+    @PostConstruct
+    private void init() {
+        restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(username, password));
+    }
 
     public Optional<EncoderStatus> getMosaic(String id) {
         try {
@@ -153,7 +166,9 @@ public class MultiViewerService {
     public Optional<List<Layout>> getOutputLayouts() {
         List<Layout> layoutList = new ArrayList<>();
         try {
+            log.info(String.format("Output layouts URL is %s", outputLayoutsUrl));
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(outputLayoutsUrl, String.class);
+            log.info(String.format("Response is %s", responseEntity.getBody()));
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONArray layouts = new JSONArray(responseEntity.getBody());
                 for (int i = 0; i < layouts.length(); i++) {
