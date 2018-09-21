@@ -22,44 +22,11 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-    @Value("${tag.username}")
-    private String tagUsername;
-
-    @Value("${tag.password}")
-    private String tagPassword;
-
-    @Autowired
-    private BasicAuthenticationEntryPoint authenticationEntryPoint;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(tagUsername).password(passwordEncoder().encode(tagPassword))
-                .authorities("ROLE_USER");
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/channel/**").permitAll()
-                .antMatchers("/api/v1/tune/**").permitAll()
-                .antMatchers("/api/v1/configuration/**").permitAll()
-                .antMatchers("/api/v1/multiviewer/**").permitAll()
-                .antMatchers("/api/v1/multiviewers/**").permitAll()
-                .antMatchers("/**/swagger-resources/**").permitAll()
-                .antMatchers("/**/swagger-ui.html*").permitAll()
-                .antMatchers("/api/v1/multiviewer/tag/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint);
-
-        http.addFilterAfter(new CustomFilter(),
-                BasicAuthenticationFilter.class);
-
-        http.cors().configurationSource(corsConfigurationSource());
+        http
+            .csrf().disable()
+            .cors().configurationSource(corsConfigurationSource());
     }
 
     @Bean
@@ -72,10 +39,5 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

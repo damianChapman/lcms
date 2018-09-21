@@ -1,5 +1,7 @@
 package com.directv.lcms;
 
+import com.couchbase.client.java.env.CouchbaseEnvironment;
+import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
@@ -21,6 +23,9 @@ public class CouchbaseConfiguration extends AbstractCouchbaseConfiguration {
     @Value("${couchbase.cluster.ip}")
     private String ip;
 
+    @Value("${couchbase.connect.timeout}")
+    private long connectTimeout;
+
     @Override
     protected List<String> getBootstrapHosts() {
         return Arrays.asList(this.ip);
@@ -34,6 +39,14 @@ public class CouchbaseConfiguration extends AbstractCouchbaseConfiguration {
     @Override
     protected String getBucketPassword() {
         return this.password;
+    }
+
+    @Override
+    protected CouchbaseEnvironment getEnvironment() {
+        return  DefaultCouchbaseEnvironment
+                .builder()
+                .connectTimeout(connectTimeout)
+                .build();
     }
 }
 
