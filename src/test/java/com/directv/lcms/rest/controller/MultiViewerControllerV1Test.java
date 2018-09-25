@@ -60,8 +60,8 @@ public class MultiViewerControllerV1Test {
         ScanTask scanTask = new ScanTask();
         scanTask.setIp_address_from("225.0.5.1");
         scanTask.setIp_address_to("225.0.5.10");
-        scanTask.setNetwork_id("3");
-        scanTask.setPort_from("2000");
+        scanTask.setNetwork_id(3);
+        scanTask.setPort_from(2000);
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String scanTaskString = objectWriter.writeValueAsString(scanTask);
         mvc.perform(MockMvcRequestBuilders.post(stringBuilder.toString())

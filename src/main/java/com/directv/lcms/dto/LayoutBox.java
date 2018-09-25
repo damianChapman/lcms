@@ -1,23 +1,23 @@
 package com.directv.lcms.dto;
 
 public class LayoutBox {
-    private String id;
-    private String channel_source_id;
+    private long id;
+    private long channel_source_id;
     private String title;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getChannel_source_id() {
+    public long getChannel_source_id() {
         return channel_source_id;
     }
 
-    public void setChannel_source_id(String channel_source_id) {
+    public void setChannel_source_id(long channel_source_id) {
         this.channel_source_id = channel_source_id;
     }
 

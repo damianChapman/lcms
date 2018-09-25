@@ -1,27 +1,27 @@
 package com.directv.lcms.dto;
 
 public class ScanTask {
-    private String progress;
+    private long progress;
     private String ip_address_from;
     private String status;
     private String ssm_to;
     private String port_to;
-    private String mode_id;
-    private String device_id;
+    private long mode_id;
+    private long device_id;
     private String ip_address_to;
     private String modified;
-    private String port_from;
-    private String id;
-    private String network_id;
+    private int port_from;
+    private long id;
+    private long network_id;
     private String created;
     private String ssm_from;
-    private String time_remained;
+    private long time_remained;
 
-    public String getProgress() {
+    public long getProgress() {
         return progress;
     }
 
-    public void setProgress(String progress) {
+    public void setProgress(long progress) {
         this.progress = progress;
     }
 
@@ -57,19 +57,19 @@ public class ScanTask {
         this.port_to = port_to;
     }
 
-    public String getMode_id() {
+    public long getMode_id() {
         return mode_id;
     }
 
-    public void setMode_id(String mode_id) {
+    public void setMode_id(long mode_id) {
         this.mode_id = mode_id;
     }
 
-    public String getDevice_id() {
+    public long getDevice_id() {
         return device_id;
     }
 
-    public void setDevice_id(String device_id) {
+    public void setDevice_id(long device_id) {
         this.device_id = device_id;
     }
 
@@ -89,27 +89,27 @@ public class ScanTask {
         this.modified = modified;
     }
 
-    public String getPort_from() {
+    public int getPort_from() {
         return port_from;
     }
 
-    public void setPort_from(String port_from) {
+    public void setPort_from(int port_from) {
         this.port_from = port_from;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNetwork_id() {
+    public long getNetwork_id() {
         return network_id;
     }
 
-    public void setNetwork_id(String network_id) {
+    public void setNetwork_id(long network_id) {
         this.network_id = network_id;
     }
 
@@ -129,11 +129,11 @@ public class ScanTask {
         this.ssm_from = ssm_from;
     }
 
-    public String getTime_remained() {
+    public long getTime_remained() {
         return time_remained;
     }
 
-    public void setTime_remained(String time_remained) {
+    public void setTime_remained(long time_remained) {
         this.time_remained = time_remained;
     }
 }

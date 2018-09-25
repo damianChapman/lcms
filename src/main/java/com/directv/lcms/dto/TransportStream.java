@@ -1,76 +1,76 @@
 package com.directv.lcms.dto;
 
 public class TransportStream {
-    private String id;
-    private String video_pid;
-    private String program_number;
-    private String transport_mode_id;
-    private String audio_pid;
-    private String transport_stream_id;
-    private String pmt_pid;
-    private String is_null_padding;
+    private long id;
+    private long video_pid;
+    private long program_number;
+    private long transport_mode_id;
+    private long audio_pid;
+    private long transport_stream_id;
+    private long pmt_pid;
+    private int is_null_padding;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getVideo_pid() {
+    public long getVideo_pid() {
         return video_pid;
     }
 
-    public void setVideo_pid(String video_pid) {
+    public void setVideo_pid(long video_pid) {
         this.video_pid = video_pid;
     }
 
-    public String getProgram_number() {
+    public long getProgram_number() {
         return program_number;
     }
 
-    public void setProgram_number(String program_number) {
+    public void setProgram_number(long program_number) {
         this.program_number = program_number;
     }
 
-    public String getTransport_mode_id() {
+    public long getTransport_mode_id() {
         return transport_mode_id;
     }
 
-    public void setTransport_mode_id(String transport_mode_id) {
+    public void setTransport_mode_id(long transport_mode_id) {
         this.transport_mode_id = transport_mode_id;
     }
 
-    public String getAudio_pid() {
+    public long getAudio_pid() {
         return audio_pid;
     }
 
-    public void setAudio_pid(String audio_pid) {
+    public void setAudio_pid(long audio_pid) {
         this.audio_pid = audio_pid;
     }
 
-    public String getTransport_stream_id() {
+    public long getTransport_stream_id() {
         return transport_stream_id;
     }
 
-    public void setTransport_stream_id(String transport_stream_id) {
+    public void setTransport_stream_id(long transport_stream_id) {
         this.transport_stream_id = transport_stream_id;
     }
 
-    public String getPmt_pid() {
+    public long getPmt_pid() {
         return pmt_pid;
     }
 
-    public void setPmt_pid(String pmt_pid) {
+    public void setPmt_pid(long pmt_pid) {
         this.pmt_pid = pmt_pid;
     }
 
-    public String getIs_null_padding() {
+    public int getIs_null_padding() {
         return is_null_padding;
     }
 
-    public void setIs_null_padding(String is_null_padding) {
+    public void setIs_null_padding(int is_null_padding) {
         this.is_null_padding = is_null_padding;
     }
 }

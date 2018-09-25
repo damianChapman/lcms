@@ -19,7 +19,6 @@ public class Channel {
     private String key;
     private String primarySourceIPAddress;
     private String backupSourceIPAddress;
-
     private String primaryGroupIPAddress;
     private String backupGroupIPAddress;
     private String primaryPortNumber;

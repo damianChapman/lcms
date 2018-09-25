@@ -1,5 +1,6 @@
 package com.directv.lcms.rest.controller;
 
+import com.directv.lcms.dto.AudioPidStatistics;
 import com.directv.lcms.dto.ChannelSource;
 import com.directv.lcms.dto.Encoder;
 import com.directv.lcms.dto.EncoderStatus;
@@ -15,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,9 +148,40 @@ public class MultiViewerControllerV1 {
         }
     }
 
-    private void validate(String function, String manifestUrl) {
-        if (StringUtils.isBlank(function) && StringUtils.isBlank(manifestUrl)) {
-            throw new IllegalArgumentException("At least one parameter is required for successful update.");
+    @RequestMapping(value = "/multiviewer/tag/encoder/{id}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Sets a TAG MCM-9000 encoder.",
+            notes = "")
+    private ResponseEntity<Encoder> putEncoder(@ApiParam(value = "Multiviewer encoder.")
+                                               @RequestBody Encoder encoder) {
+        Optional<Encoder> encoderResponse = multiViewerService.putEncoder(encoder);
+        if (encoderResponse.isPresent()) {
+            return ResponseEntity.ok(encoderResponse.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @RequestMapping(value = "/multiviewer/tag/encoders", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Gets a TAG MCM-9000 encoder.",
+            notes = "")
+    private ResponseEntity<List<Encoder>> getEncoders() {
+        Optional<List<Encoder>> encoders = multiViewerService.getEncoders();
+        if (encoders.isPresent()) {
+            return ResponseEntity.ok(encoders.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @RequestMapping(value = "/multiviewer/tag/channel/statistics/audio_pids_statistics", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Gets a TAG MCM-9000 channel audio pids statistics.",
+            notes = "")
+    private ResponseEntity<List<AudioPidStatistics>> getAudioPidsStatistics() {
+        Optional<List<AudioPidStatistics>> audioPidStatisticsList = multiViewerService.getChannelAudioPidsStatistics();
+        if (audioPidStatisticsList.isPresent()) {
+            return ResponseEntity.ok(audioPidStatisticsList.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
@@ -166,4 +197,9 @@ public class MultiViewerControllerV1 {
         }
     }
 
+    private void validate(String function, String manifestUrl) {
+        if (StringUtils.isBlank(function) && StringUtils.isBlank(manifestUrl)) {
+            throw new IllegalArgumentException("At least one parameter is required for successful update.");
+        }
+    }
 }
