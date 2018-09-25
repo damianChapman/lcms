@@ -1,25 +1,25 @@
 package com.directv.lcms.dto;
 
 public class OutputStream {
-    private String port;
-    private String id;
+    private int port;
+    private long id;
     private String ip_address;
-    private String network_id;
-    private String ttl;
+    private long network_id;
+    private long ttl;
 
-    public String getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -31,19 +31,19 @@ public class OutputStream {
         this.ip_address = ip_address;
     }
 
-    public String getNetwork_id() {
+    public long getNetwork_id() {
         return network_id;
     }
 
-    public void setNetwork_id(String network_id) {
+    public void setNetwork_id(long network_id) {
         this.network_id = network_id;
     }
 
-    public String getTtl() {
+    public long getTtl() {
         return ttl;
     }
 
-    public void setTtl(String ttl) {
+    public void setTtl(long ttl) {
         this.ttl = ttl;
     }
 }

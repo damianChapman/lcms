@@ -1,68 +1,67 @@
 package com.directv.lcms.dto;
 
 public class ChannelProfile {
-
-    private float id;
+    private long id;
     private String title;
-    private float notification_set_id;
-    private float event_rule_set_id;
-    private float is_default;
-    private float is_scanned;
-    private float is_scrambled;
+    private long notification_set_id;
+    private long event_rule_set_id;
+    private int is_default;
+    private int is_scanned;
+    private int is_scrambled;
 
-    public float getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public float getNotification_set_id() {
-        return notification_set_id;
-    }
-
-    public float getEvent_rule_set_id() {
-        return event_rule_set_id;
-    }
-
-    public float getIs_default() {
-        return is_default;
-    }
-
-    public float getIs_scanned() {
-        return is_scanned;
-    }
-
-    public float getIs_scrambled() {
-        return is_scrambled;
-    }
-
-    public void setId(float id) {
-        this.id = id;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setNotification_set_id(float notification_set_id) {
+    public long getNotification_set_id() {
+        return notification_set_id;
+    }
+
+    public void setNotification_set_id(long notification_set_id) {
         this.notification_set_id = notification_set_id;
     }
 
-    public void setEvent_rule_set_id(float event_rule_set_id) {
+    public long getEvent_rule_set_id() {
+        return event_rule_set_id;
+    }
+
+    public void setEvent_rule_set_id(long event_rule_set_id) {
         this.event_rule_set_id = event_rule_set_id;
     }
 
-    public void setIs_default(float is_default) {
+    public int getIs_default() {
+        return is_default;
+    }
+
+    public void setIs_default(int is_default) {
         this.is_default = is_default;
     }
 
-    public void setIs_scanned(float is_scanned) {
+    public int getIs_scanned() {
+        return is_scanned;
+    }
+
+    public void setIs_scanned(int is_scanned) {
         this.is_scanned = is_scanned;
     }
 
-    public void setIs_scrambled(float is_scrambled) {
+    public int getIs_scrambled() {
+        return is_scrambled;
+    }
+
+    public void setIs_scrambled(int is_scrambled) {
         this.is_scrambled = is_scrambled;
     }
 }

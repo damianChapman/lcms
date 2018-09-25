@@ -1,5 +1,6 @@
 package com.directv.lcms.service;
 
+import com.directv.lcms.dto.AudioPidStatistics;
 import com.directv.lcms.dto.ChannelProfile;
 import com.directv.lcms.dto.ChannelSource;
 import com.directv.lcms.dto.Encoder;
@@ -59,11 +60,17 @@ public class MultiViewerService {
     @Value("${tag.encoder.url}")
     private String encoderUrl;
 
+    @Value("${tag.encoders.url}")
+    private String encodersUrl;
+
     @Value("${tag.username}")
     private String username;
 
     @Value("${tag.password}")
     private String password;
+
+    @Value("${tag.audio.pids.statistics.url}")
+    private String audioPidsStatisticsUrl;
 
     @PostConstruct
     private void init() {
@@ -202,6 +209,7 @@ public class MultiViewerService {
     public Optional<Encoder> getEncoder(String id) {
         Encoder encoder = null;
         try {
+            encoderUrl = encoderUrl.replace("{id}", id);
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(encoderUrl, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONObject jsonObject = new JSONObject(responseEntity.getBody());
@@ -215,12 +223,12 @@ public class MultiViewerService {
                     transportStreamList.add(objectMapper.readValue(transportStreams.get(i).toString(), TransportStream.class));
                 }
                 JSONArray outputStreams = encoderJson.getJSONArray("OutputStream");
-                for (int i = 0; i < outputStreams.length(); i++) {
-                    outputStreamList.add(objectMapper.readValue(outputStreams.get(i).toString(), OutputStream.class));
+                for (int j = 0; j < outputStreams.length(); j++) {
+                    outputStreamList.add(objectMapper.readValue(outputStreams.get(j).toString(), OutputStream.class));
                 }
                 JSONArray layouts = encoderJson.getJSONArray("Layouts");
-                for (int i = 0; i < layouts.length(); i++) {
-                    layoutList.add(objectMapper.readValue(layouts.get(i).toString(), Layout.class));
+                for (int k = 0; k < layouts.length(); k++) {
+                    layoutList.add(objectMapper.readValue(layouts.get(k).toString(), Layout.class));
                 }
                 encoder.setTransportStream(transportStreamList);
                 encoder.setOutputStream(outputStreamList);
@@ -231,6 +239,102 @@ public class MultiViewerService {
             }
         } catch (IOException e) {
             log.error("Error getting multiviewer output encoder", e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Encoder> putEncoder(Encoder encoder) {
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(encoderUrl, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+                List<TransportStream> transportStreamList = new ArrayList<>();
+                List<OutputStream> outputStreamList = new ArrayList<>();
+                List<Layout> layoutList = new ArrayList<>();
+                JSONObject encoderJson = (JSONObject) jsonObject.get("Encoder");
+                Encoder encoderResponse = objectMapper.readValue(encoderJson.toString(), Encoder.class);
+                JSONArray transportStreams = encoderJson.getJSONArray("TransportStream");
+                for (int i = 0; i < transportStreams.length(); i++) {
+                    transportStreamList.add(objectMapper.readValue(transportStreams.get(i).toString(), TransportStream.class));
+                }
+                JSONArray outputStreams = encoderJson.getJSONArray("OutputStream");
+                for (int j = 0; j < outputStreams.length(); j++) {
+                    outputStreamList.add(objectMapper.readValue(outputStreams.get(j).toString(), OutputStream.class));
+                }
+                JSONArray layouts = encoderJson.getJSONArray("Layouts");
+                for (int k = 0; k < layouts.length(); k++) {
+                    layoutList.add(objectMapper.readValue(layouts.get(k).toString(), Layout.class));
+                }
+                encoderResponse.setTransportStream(transportStreamList);
+                encoderResponse.setOutputStream(outputStreamList);
+                encoderResponse.setLayouts(layoutList);
+                return Optional.of(encoderResponse);
+            } else {
+                return Optional.empty();
+            }
+        } catch (IOException e) {
+            log.error("Error getting multiviewer output encoder", e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<List<Encoder>> getEncoders() {
+        List<Encoder> encoderList = new ArrayList<>();
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(encodersUrl, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONArray encoders = new JSONArray(responseEntity.getBody());
+                for (int i = 0; i < encoders.length(); i++) {
+                    List<TransportStream> transportStreamList = new ArrayList<>();
+                    List<OutputStream> outputStreamList = new ArrayList<>();
+                    List<Layout> layoutList = new ArrayList<>();
+                    JSONObject encoderJsonObject = (JSONObject) encoders.get(i);
+                    JSONObject encoderJson = (JSONObject) encoderJsonObject.get("Encoder");
+                    Encoder encoder = objectMapper.readValue(encoderJson.toString(), Encoder.class);
+                    JSONArray transportStreams = encoderJson.getJSONArray("TransportStream");
+                    for (int j = 0; j < transportStreams.length(); j++) {
+                        transportStreamList.add(objectMapper.readValue(transportStreams.get(j).toString(), TransportStream.class));
+                    }
+                    JSONArray outputStreams = encoderJson.getJSONArray("OutputStream");
+                    for (int k = 0; k < outputStreams.length(); k++) {
+                        outputStreamList.add(objectMapper.readValue(outputStreams.get(k).toString(), OutputStream.class));
+                    }
+                    JSONArray layouts = encoderJson.getJSONArray("Layouts");
+                    for (int l = 0; l < layouts.length(); l++) {
+                        layoutList.add(objectMapper.readValue(layouts.get(l).toString(), Layout.class));
+                    }
+                    encoder.setTransportStream(transportStreamList);
+                    encoder.setOutputStream(outputStreamList);
+                    encoder.setLayouts(layoutList);
+                    encoderList.add(encoder);
+                }
+                return Optional.of(encoderList);
+            } else {
+                return Optional.empty();
+            }
+        } catch (IOException e) {
+            log.error("Error getting multiviewer output encoders", e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<List<AudioPidStatistics>> getChannelAudioPidsStatistics() {
+        List<AudioPidStatistics> audioPidStatisticsList = new ArrayList<>();
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(audioPidsStatisticsUrl, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONArray audioPidStatistics = new JSONArray(responseEntity.getBody());
+                for (int i = 0; i < audioPidStatistics.length(); i++) {
+                    JSONObject audioPidStatisticsJsonObject = (JSONObject) audioPidStatistics.get(i);
+                    JSONObject audioPidStatisticJson = (JSONObject) audioPidStatisticsJsonObject.get("AudioPidStatistics");
+                    audioPidStatisticsList.add(objectMapper.readValue(audioPidStatisticJson.toString(), AudioPidStatistics.class));
+                }
+                return Optional.of(audioPidStatisticsList);
+            } else {
+                return Optional.empty();
+            }
+        } catch (IOException e) {
+            log.error("Error getting channel audio pids statistics", e);
         }
         return Optional.empty();
     }

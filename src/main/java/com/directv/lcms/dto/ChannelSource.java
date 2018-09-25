@@ -4,22 +4,22 @@ import java.util.List;
 
 public class ChannelSource {
     private List<ChannelProfile> channelProfile;
-    private String port;
-    private String standard_type_id;
-    private String device_id;
-    private String is_monitored;
+    private int port;
+    private long standard_type_id;
+    private long device_id;
+    private int is_monitored;
     private String modified;
-    private String service_type_id;
-    private String id;
-    private String is_record_enabled;
+    private long service_type_id;
+    private long id;
+    private int is_record_enabled;
     private String title;
     private String ip_address;
-    private String program_number;
-    private String network_id;
+    private long program_number;
+    private long network_id;
     private String created;
     private String ssm_ip_address;
-    private String is_scanned;
-    private String uuid;
+    private int is_scanned;
+    private long uuid;
     private String note;
 
     public List<ChannelProfile> getChannelProfile() {
@@ -30,35 +30,35 @@ public class ChannelSource {
         this.channelProfile = channelProfile;
     }
 
-    public String getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(String port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
-    public String getStandard_type_id() {
+    public long getStandard_type_id() {
         return standard_type_id;
     }
 
-    public void setStandard_type_id(String standard_type_id) {
+    public void setStandard_type_id(long standard_type_id) {
         this.standard_type_id = standard_type_id;
     }
 
-    public String getDevice_id() {
+    public long getDevice_id() {
         return device_id;
     }
 
-    public void setDevice_id(String device_id) {
+    public void setDevice_id(long device_id) {
         this.device_id = device_id;
     }
 
-    public String getIs_monitored() {
+    public int getIs_monitored() {
         return is_monitored;
     }
 
-    public void setIs_monitored(String is_monitored) {
+    public void setIs_monitored(int is_monitored) {
         this.is_monitored = is_monitored;
     }
 
@@ -70,27 +70,27 @@ public class ChannelSource {
         this.modified = modified;
     }
 
-    public String getService_type_id() {
+    public long getService_type_id() {
         return service_type_id;
     }
 
-    public void setService_type_id(String service_type_id) {
+    public void setService_type_id(long service_type_id) {
         this.service_type_id = service_type_id;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getIs_record_enabled() {
+    public int getIs_record_enabled() {
         return is_record_enabled;
     }
 
-    public void setIs_record_enabled(String is_record_enabled) {
+    public void setIs_record_enabled(int is_record_enabled) {
         this.is_record_enabled = is_record_enabled;
     }
 
@@ -110,19 +110,19 @@ public class ChannelSource {
         this.ip_address = ip_address;
     }
 
-    public String getProgram_number() {
+    public long getProgram_number() {
         return program_number;
     }
 
-    public void setProgram_number(String program_number) {
+    public void setProgram_number(long program_number) {
         this.program_number = program_number;
     }
 
-    public String getNetwork_id() {
+    public long getNetwork_id() {
         return network_id;
     }
 
-    public void setNetwork_id(String network_id) {
+    public void setNetwork_id(long network_id) {
         this.network_id = network_id;
     }
 
@@ -142,19 +142,19 @@ public class ChannelSource {
         this.ssm_ip_address = ssm_ip_address;
     }
 
-    public String getIs_scanned() {
+    public int getIs_scanned() {
         return is_scanned;
     }
 
-    public void setIs_scanned(String is_scanned) {
+    public void setIs_scanned(int is_scanned) {
         this.is_scanned = is_scanned;
     }
 
-    public String getUuid() {
+    public long getUuid() {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(long uuid) {
         this.uuid = uuid;
     }
 

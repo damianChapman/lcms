@@ -3,19 +3,19 @@ package com.directv.lcms.dto;
 import java.util.List;
 
 public class Layout {
-    private String id;
+    private long id;
     private String title;
-    private String layout_type_id;
+    private long layout_type_id;
     private String created;
     private List<LayoutBox> layoutBoxes;
     private List<Encoder> encoders;
     private String modified;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -27,11 +27,11 @@ public class Layout {
         this.title = title;
     }
 
-    public String getLayout_type_id() {
+    public long getLayout_type_id() {
         return layout_type_id;
     }
 
-    public void setLayout_type_id(String layout_type_id) {
+    public void setLayout_type_id(long layout_type_id) {
         this.layout_type_id = layout_type_id;
     }
 
