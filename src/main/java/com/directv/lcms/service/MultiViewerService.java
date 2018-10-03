@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,9 @@ public class MultiViewerService {
 
     @Value("${tag.audio.pids.statistics.url}")
     private String audioPidsStatisticsUrl;
+
+    @Value("${encoder.id}")
+    private String encoderId;
 
     @PostConstruct
     private void init() {
@@ -224,6 +228,17 @@ public class MultiViewerService {
         }
         return Optional.empty();
     }
+
+    public ResponseEntity<String> updateLayoutofEncoder(String layoutId) {
+        Encoder encoder = getEncoder(encoderId).get();
+        Layout layout  = getOutputLayout(layoutId).get();
+        List<Layout> layouts =  new ArrayList<>(Arrays.asList(layout));
+        encoder.setLayouts(layouts);
+        encoderUrl = encoderUrl.replace("{id}", encoderId);
+        HttpEntity<Encoder> httpEntity = new HttpEntity<>(encoder);
+        return restTemplate.exchange(encoderUrl, HttpMethod.PUT, httpEntity, String.class);
+    }
+
 }
 
 
