@@ -67,7 +67,7 @@ public class MultiViewerService {
     @Value("${tag.audio.pids.statistics.url}")
     private String audioPidsStatisticsUrl;
 
-    @Value("${encoder.id}")
+    @Value("${tag.encoder.id}")
     private String encoderId;
 
     @PostConstruct
