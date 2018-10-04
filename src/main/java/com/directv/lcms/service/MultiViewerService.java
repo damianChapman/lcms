@@ -1,6 +1,8 @@
 package com.directv.lcms.service;
 
 import com.directv.lcms.dto.*;
+import com.directv.lcms.rest.controller.EncoderRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -9,9 +11,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -121,6 +121,7 @@ public class MultiViewerService {
 
     public Optional<Layout> getOutputLayout(String id) {
         try {
+            outputLayoutUrl = outputLayoutUrl.replace("{id}", id);
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(outputLayoutUrl, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONObject jsonObject = new JSONObject(responseEntity.getBody());
@@ -230,12 +231,21 @@ public class MultiViewerService {
     }
 
     public ResponseEntity<String> updateLayoutofEncoder(String layoutId) {
+
         Encoder encoder = getEncoder(encoderId).get();
         Layout layout  = getOutputLayout(layoutId).get();
         List<Layout> layouts =  new ArrayList<>(Arrays.asList(layout));
         encoder.setLayouts(layouts);
         encoderUrl = encoderUrl.replace("{id}", encoderId);
-        HttpEntity<Encoder> httpEntity = new HttpEntity<>(encoder);
+        EncoderRequest encoderRequest = new EncoderRequest(encoder);
+        String encoderRequestJson = null;
+        try {
+            encoderRequestJson = objectMapper.writeValueAsString(encoderRequest);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        HttpEntity<String> httpEntity = new HttpEntity<>(encoderRequestJson);
+
         return restTemplate.exchange(encoderUrl, HttpMethod.PUT, httpEntity, String.class);
     }
 

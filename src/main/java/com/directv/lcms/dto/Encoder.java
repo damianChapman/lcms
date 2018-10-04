@@ -1,15 +1,20 @@
 package com.directv.lcms.dto;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Encoder {
     private long encoder_codec_type_id;
     private long audio_alarm_agent_id;
     private long device_id;
+    @JsonProperty("TransportStream")
     private List<TransportStream> transportStream;
     private long vbv_limit;
     private long encoder_gop_size_mode_id;
     private long error_display_agent_id;
+    @JsonProperty("OutputStreams")
     private List<OutputStream> outputStream;
     private String modified;
     private long encoder_frame_rate_id;
@@ -17,11 +22,21 @@ public class Encoder {
     private int is_enabled;
     private String title;
     private String created;
-    private List<Layout> Layouts;
+    @JsonProperty("Layouts")
+    private List<Layout> layouts;
     private long layout_change_interval;
     private long encoder_gop_size_id;
     private long video_bitrate;
     private int is_deblocking;
+    private long is_downscale;
+    private long is_interlaced;
+    private long sdi_out_id;
+    private long ftp_agent_id;
+    private long output_resolution_id;
+    private long enable_alarms_display;
+    private long encoder_linear_codec_type_id;
+    private long encoder_uhd_tech_type_id;
+    private long encoder_latency_type_id;
 
     public long getEncoder_codec_type_id() {
         return encoder_codec_type_id;
@@ -47,6 +62,13 @@ public class Encoder {
         this.device_id = device_id;
     }
 
+    public List<TransportStream> getTransportStream() {
+        return transportStream;
+    }
+
+    public void setTransportStream(List<TransportStream> transportStream) {
+        this.transportStream = transportStream;
+    }
 
     public long getVbv_limit() {
         return vbv_limit;
@@ -70,6 +92,14 @@ public class Encoder {
 
     public void setError_display_agent_id(long error_display_agent_id) {
         this.error_display_agent_id = error_display_agent_id;
+    }
+
+    public List<OutputStream> getOutputStream() {
+        return outputStream;
+    }
+
+    public void setOutputStream(List<OutputStream> outputStream) {
+        this.outputStream = outputStream;
     }
 
     public String getModified() {
@@ -121,11 +151,11 @@ public class Encoder {
     }
 
     public List<Layout> getLayouts() {
-        return Layouts;
+        return layouts;
     }
 
-    public void setLayouts(List<Layout> Layouts) {
-        this.Layouts = Layouts;
+    public void setLayouts(List<Layout> layouts) {
+        this.layouts = layouts;
     }
 
     public long getLayout_change_interval() {
@@ -160,20 +190,76 @@ public class Encoder {
         this.is_deblocking = is_deblocking;
     }
 
-    public List<TransportStream> getTransportStream() {
-        return transportStream;
+    public long getIs_downscale() {
+        return is_downscale;
     }
 
-    public void setTransportStream(List<TransportStream> transportStream) {
-        this.transportStream = transportStream;
+    public void setIs_downscale(long is_downscale) {
+        this.is_downscale = is_downscale;
     }
 
-    public List<OutputStream> getOutputStream() {
-        return outputStream;
+    public long getIs_interlaced() {
+        return is_interlaced;
     }
 
-    public void setOutputStream(List<OutputStream> outputStream) {
-        this.outputStream = outputStream;
+    public void setIs_interlaced(long is_interlaced) {
+        this.is_interlaced = is_interlaced;
+    }
+
+    public long getSdi_out_id() {
+        return sdi_out_id;
+    }
+
+    public void setSdi_out_id(long sdi_out_id) {
+        this.sdi_out_id = sdi_out_id;
+    }
+
+    public long getFtp_agent_id() {
+        return ftp_agent_id;
+    }
+
+    public void setFtp_agent_id(long ftp_agent_id) {
+        this.ftp_agent_id = ftp_agent_id;
+    }
+
+    public long getOutput_resolution_id() {
+        return output_resolution_id;
+    }
+
+    public void setOutput_resolution_id(long output_resolution_id) {
+        this.output_resolution_id = output_resolution_id;
+    }
+
+    public long getEnable_alarms_display() {
+        return enable_alarms_display;
+    }
+
+    public void setEnable_alarms_display(long enable_alarms_display) {
+        this.enable_alarms_display = enable_alarms_display;
+    }
+
+    public long getEncoder_linear_codec_type_id() {
+        return encoder_linear_codec_type_id;
+    }
+
+    public void setEncoder_linear_codec_type_id(long encoder_linear_codec_type_id) {
+        this.encoder_linear_codec_type_id = encoder_linear_codec_type_id;
+    }
+
+    public long getEncoder_uhd_tech_type_id() {
+        return encoder_uhd_tech_type_id;
+    }
+
+    public void setEncoder_uhd_tech_type_id(long encoder_uhd_tech_type_id) {
+        this.encoder_uhd_tech_type_id = encoder_uhd_tech_type_id;
+    }
+
+    public long getEncoder_latency_type_id() {
+        return encoder_latency_type_id;
+    }
+
+    public void setEncoder_latency_type_id(long encoder_latency_type_id) {
+        this.encoder_latency_type_id = encoder_latency_type_id;
     }
 }
 
