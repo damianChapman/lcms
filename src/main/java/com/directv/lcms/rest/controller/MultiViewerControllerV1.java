@@ -215,7 +215,7 @@ public class MultiViewerControllerV1 {
     }
 
     @RequestMapping(value = "/multiviewer/tag/sourcesToOutput/{id}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
-    @ApiOperation(value = "Gets a specific output's associated layouts & sources from a TAG MCM-9000.",
+    @ApiOperation(value = "Puts a specific output's associated layouts & sources from a TAG MCM-9000.",
             notes = "")
     private ResponseEntity<String> putSourcesToOutput(@ApiParam(value = "id of multiviewer encoder.")
                                                       @PathVariable String id,

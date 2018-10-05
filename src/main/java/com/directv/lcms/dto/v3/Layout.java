@@ -1,7 +1,5 @@
 package com.directv.lcms.dto.v3;
 
-import io.swagger.annotations.ApiModel;
-
 import java.util.List;
 
 public class Layout {
