@@ -192,7 +192,7 @@ public class MultiViewerControllerV1 {
     @RequestMapping(value = "/multiviewer/tag/encoder/layout/{encoderId}/{layoutId}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates the encoder to associate it with a layout")
     private ResponseEntity updateEncoderLayout(@ApiParam(value = "Encoder id")
-                                             @PathVariable String encoderId,
+                                               @PathVariable String encoderId,
                                                @ApiParam(value = "Layout id")
                                                @PathVariable String layoutId) {
         return multiViewerService.updateLayoutofEncoder(encoderId, layoutId);
