@@ -1,7 +1,5 @@
 package com.directv.lcms.dto.v3;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class Source {
     private String url;
     private String secondary_url;

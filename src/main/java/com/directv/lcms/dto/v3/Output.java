@@ -3,7 +3,7 @@ package com.directv.lcms.dto.v3;
 import java.util.List;
 
 public class Output {
-    List<Layout> layouts;
+    private List<Layout> layouts;
 
     public List<Layout> getLayouts() {
         return layouts;

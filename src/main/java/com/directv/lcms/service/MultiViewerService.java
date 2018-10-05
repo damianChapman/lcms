@@ -36,6 +36,7 @@ import java.util.Optional;
 @Service
 public class MultiViewerService {
     private static final Logger log = LoggerFactory.getLogger(MultiViewerService.class);
+    public static final String OUTPUT_ID = "{output_id}";
 
     @Resource(name = "restTemplate")
     private RestTemplate restTemplate;
@@ -261,7 +262,7 @@ public class MultiViewerService {
 
     public Optional<Output> getSourcesToOutput(String id) {
         try {
-            String url = sourcesToOutputUrl.replace("{output_id}", id);
+            String url = sourcesToOutputUrl.replace(OUTPUT_ID, id);
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONObject jsonObject = new JSONObject(responseEntity.getBody());
@@ -279,7 +280,7 @@ public class MultiViewerService {
 
     public Optional<String> putSourcesToOutput(String id, OutputRequest output) {
         try {
-            String url = sourcesToOutputUrl.replace("{output_id}", id);
+            String url = sourcesToOutputUrl.replace(OUTPUT_ID, id);
             HttpEntity<String> httpEntity = new HttpEntity<>(objectMapper.writeValueAsString(output));
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {

@@ -10,7 +10,7 @@ public class Layout {
     private String uuid;
 
     @JsonProperty("Source")
-    Source source;
+    private Source source;
 
     public long getId() {
         return id;

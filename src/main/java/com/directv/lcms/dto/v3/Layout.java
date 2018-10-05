@@ -5,7 +5,7 @@ import java.util.List;
 public class Layout {
     private long id;
     private String uuid;
-    List<Source> sources;
+    private List<Source> sources;
 
     public long getId() {
         return id;
