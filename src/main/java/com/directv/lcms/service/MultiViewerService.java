@@ -1,5 +1,7 @@
 package com.directv.lcms.service;
 
+import com.directv.lcms.dto.v3.Output;
+import com.directv.lcms.dto.v3.put.OutputRequest;
 import com.directv.lcms.dto.AudioPidStatistics;
 import com.directv.lcms.dto.ChannelSource;
 import com.directv.lcms.dto.Encoder;
@@ -34,6 +36,7 @@ import java.util.Optional;
 @Service
 public class MultiViewerService {
     private static final Logger log = LoggerFactory.getLogger(MultiViewerService.class);
+    public static final String OUTPUT_ID = "{output_id}";
 
     @Resource(name = "restTemplate")
     private RestTemplate restTemplate;
@@ -73,6 +76,9 @@ public class MultiViewerService {
 
     @Value("${tag.audio.pids.statistics.url}")
     private String audioPidsStatisticsUrl;
+
+    @Value("${tag.sources.to.output.url}")
+    private String sourcesToOutputUrl;
 
     @PostConstruct
     private void init() {
@@ -253,6 +259,39 @@ public class MultiViewerService {
         return restTemplate.exchange(requestUrl, HttpMethod.PUT, httpEntity, String.class);
     }
 
+
+    public Optional<Output> getSourcesToOutput(String id) {
+        try {
+            String url = sourcesToOutputUrl.replace(OUTPUT_ID, id);
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+                String outputJSON = jsonObject.get("Output").toString();
+                Output output = objectMapper.readValue(outputJSON, Output.class);
+                return Optional.of(output);
+            } else {
+                return Optional.empty();
+            }
+        } catch (IOException e) {
+            log.error("Error getting multiviewer output", e);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<String> putSourcesToOutput(String id, OutputRequest output) {
+        try {
+            String url = sourcesToOutputUrl.replace(OUTPUT_ID, id);
+            HttpEntity<String> httpEntity = new HttpEntity<>(objectMapper.writeValueAsString(output));
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity, String.class);
+            if (StringUtils.isNotBlank(responseEntity.getBody())) {
+                JSONObject jsonObject = new JSONObject(responseEntity.getBody());
+                return Optional.of(jsonObject.toString());
+            }
+        } catch (IOException e) {
+            log.error("Error putting multiviewer output", e);
+        }
+        return Optional.empty();
+    }
 }
 
 
