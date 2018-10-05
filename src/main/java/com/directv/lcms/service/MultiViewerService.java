@@ -1,6 +1,13 @@
 package com.directv.lcms.service;
 
-import com.directv.lcms.dto.*;
+import com.directv.lcms.dto.AudioPidStatistics;
+import com.directv.lcms.dto.ChannelSource;
+import com.directv.lcms.dto.Encoder;
+import com.directv.lcms.dto.EncoderStatus;
+import com.directv.lcms.dto.Layout;
+import com.directv.lcms.dto.ScanTask;
+import com.directv.lcms.rest.controller.EncoderRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,7 +125,8 @@ public class MultiViewerService {
 
     public Optional<Layout> getOutputLayout(String id) {
         try {
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(outputLayoutUrl, String.class);
+            String layoutUrl = outputLayoutUrl.replace("{id}", id);
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(layoutUrl, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONObject jsonObject = new JSONObject(responseEntity.getBody());
                 String layoutJson = jsonObject.get("Layout").toString();
@@ -224,6 +233,26 @@ public class MultiViewerService {
         }
         return Optional.empty();
     }
+
+    public ResponseEntity<String> updateLayoutofEncoder(String encoderId, String layoutId) {
+
+        Encoder encoder = getEncoder(encoderId).get();
+        Layout layout = getOutputLayout(layoutId).get();
+        List<Layout> layouts = new ArrayList<>(Arrays.asList(layout));
+        encoder.setLayouts(layouts);
+        String requestUrl = encoderUrl.replace("{id}", encoderId);
+        EncoderRequest encoderRequest = new EncoderRequest(encoder);
+        String encoderRequestJson = null;
+        try {
+            encoderRequestJson = objectMapper.writeValueAsString(encoderRequest);
+        } catch (JsonProcessingException e) {
+            log.error("Error serializing the encoder request: ", e.getStackTrace().toString());
+        }
+        HttpEntity<String> httpEntity = new HttpEntity<>(encoderRequestJson);
+
+        return restTemplate.exchange(requestUrl, HttpMethod.PUT, httpEntity, String.class);
+    }
+
 }
 
 

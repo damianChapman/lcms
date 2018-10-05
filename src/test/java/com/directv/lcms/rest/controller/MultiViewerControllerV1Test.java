@@ -93,4 +93,12 @@ public class MultiViewerControllerV1Test {
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    public void testUpdateEncoder() throws Exception {
+        StringBuilder stringBuilder = new StringBuilder("/api/v1/multiviewer/tag/encoder/2/layout/5");
+        mvc.perform(MockMvcRequestBuilders.put(stringBuilder.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
