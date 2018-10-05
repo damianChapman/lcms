@@ -246,7 +246,7 @@ public class MultiViewerService {
         try {
             encoderRequestJson = objectMapper.writeValueAsString(encoderRequest);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Error serializing the encoder request: ", e.getStackTrace().toString());
         }
         HttpEntity<String> httpEntity = new HttpEntity<>(encoderRequestJson);
 
