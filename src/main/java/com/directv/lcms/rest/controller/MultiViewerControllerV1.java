@@ -1,5 +1,7 @@
 package com.directv.lcms.rest.controller;
 
+import com.directv.lcms.dto.v3.Output;
+import com.directv.lcms.dto.v3.put.OutputRequest;
 import com.directv.lcms.dto.AudioPidStatistics;
 import com.directv.lcms.dto.ChannelSource;
 import com.directv.lcms.dto.Encoder;
@@ -196,6 +198,35 @@ public class MultiViewerControllerV1 {
                                                @ApiParam(value = "Layout id")
                                                @PathVariable String layoutId) {
         return multiViewerService.updateLayoutofEncoder(encoderId, layoutId);
+    }
+
+
+    @RequestMapping(value = "/multiviewer/tag/sourcesToOutput/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Gets a specific output's associated layouts & sources from a TAG MCM-9000.",
+            notes = "")
+    private ResponseEntity<Output> getSourcesToOutput(@ApiParam(value = "id of multiviewer encoder.")
+                                                      @PathVariable String id) {
+        Optional<Output> output = multiViewerService.getSourcesToOutput(id);
+        if (output.isPresent()) {
+            return ResponseEntity.ok(output.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @RequestMapping(value = "/multiviewer/tag/sourcesToOutput/{id}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @ApiOperation(value = "Gets a specific output's associated layouts & sources from a TAG MCM-9000.",
+            notes = "")
+    private ResponseEntity<String> putSourcesToOutput(@ApiParam(value = "id of multiviewer encoder.")
+                                                      @PathVariable String id,
+                                                      @ApiParam(value = "Multiviewer encoder.")
+                                                      @RequestBody OutputRequest outputRequest) {
+        Optional<String> response =  multiViewerService.putSourcesToOutput(id, outputRequest);
+        if (response.isPresent()) {
+            return ResponseEntity.ok(response.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
 
