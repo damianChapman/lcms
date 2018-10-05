@@ -74,9 +74,6 @@ public class MultiViewerService {
     @Value("${tag.audio.pids.statistics.url}")
     private String audioPidsStatisticsUrl;
 
-    @Value("${tag.encoder.id}")
-    private String encoderId;
-
     @PostConstruct
     private void init() {
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
@@ -128,8 +125,8 @@ public class MultiViewerService {
 
     public Optional<Layout> getOutputLayout(String id) {
         try {
-            outputLayoutUrl = outputLayoutUrl.replace("{id}", id);
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(outputLayoutUrl, String.class);
+            String layoutUrl = outputLayoutUrl.replace("{id}", id);
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(layoutUrl, String.class);
             if (StringUtils.isNotBlank(responseEntity.getBody())) {
                 JSONObject jsonObject = new JSONObject(responseEntity.getBody());
                 String layoutJson = jsonObject.get("Layout").toString();
@@ -237,7 +234,7 @@ public class MultiViewerService {
         return Optional.empty();
     }
 
-    public ResponseEntity<String> updateLayoutofEncoder(String layoutId) {
+    public ResponseEntity<String> updateLayoutofEncoder(String encoderId, String layoutId) {
 
         Encoder encoder = getEncoder(encoderId).get();
         Layout layout = getOutputLayout(layoutId).get();

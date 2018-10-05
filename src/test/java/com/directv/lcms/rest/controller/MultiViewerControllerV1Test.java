@@ -96,7 +96,7 @@ public class MultiViewerControllerV1Test {
 
     @Test
     public void testUpdateEncoder() throws Exception {
-        StringBuilder stringBuilder = new StringBuilder("/api/v1/multiviewer/tag/encoder/layout/5");
+        StringBuilder stringBuilder = new StringBuilder("/api/v1/multiviewer/tag/encoder/layout/2/5");
         mvc.perform(MockMvcRequestBuilders.put(stringBuilder.toString())
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isOk());
