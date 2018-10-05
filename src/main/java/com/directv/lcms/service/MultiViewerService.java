@@ -240,7 +240,7 @@ public class MultiViewerService {
         Layout layout = getOutputLayout(layoutId).get();
         List<Layout> layouts = new ArrayList<>(Arrays.asList(layout));
         encoder.setLayouts(layouts);
-        encoderUrl = encoderUrl.replace("{id}", encoderId);
+        String requestUrl = encoderUrl.replace("{id}", encoderId);
         EncoderRequest encoderRequest = new EncoderRequest(encoder);
         String encoderRequestJson = null;
         try {
@@ -250,7 +250,7 @@ public class MultiViewerService {
         }
         HttpEntity<String> httpEntity = new HttpEntity<>(encoderRequestJson);
 
-        return restTemplate.exchange(encoderUrl, HttpMethod.PUT, httpEntity, String.class);
+        return restTemplate.exchange(requestUrl, HttpMethod.PUT, httpEntity, String.class);
     }
 
 }
