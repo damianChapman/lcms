@@ -1,6 +1,12 @@
 package com.directv.lcms.rest.controller;
 
-import com.directv.lcms.dto.*;
+import com.directv.lcms.dto.AudioPidStatistics;
+import com.directv.lcms.dto.ChannelSource;
+import com.directv.lcms.dto.Encoder;
+import com.directv.lcms.dto.EncoderStatus;
+import com.directv.lcms.dto.Layout;
+import com.directv.lcms.dto.MultiViewer;
+import com.directv.lcms.dto.ScanTask;
 import com.directv.lcms.service.MultiViewerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -180,7 +191,7 @@ public class MultiViewerControllerV1 {
 
     @RequestMapping(value = "/multiviewer/tag/encoder/layout/{id}", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Updates the encoder to associate it with a layout")
-    private ResponseEntity updateMultiViewer(@ApiParam(value = "Layout id")
+    private ResponseEntity updateEncoderLayout(@ApiParam(value = "Layout id")
                                              @PathVariable String id) {
         return multiViewerService.updateLayoutofEncoder(id);
     }

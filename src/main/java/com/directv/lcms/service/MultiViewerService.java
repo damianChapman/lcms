@@ -1,6 +1,11 @@
 package com.directv.lcms.service;
 
-import com.directv.lcms.dto.*;
+import com.directv.lcms.dto.AudioPidStatistics;
+import com.directv.lcms.dto.ChannelSource;
+import com.directv.lcms.dto.Encoder;
+import com.directv.lcms.dto.EncoderStatus;
+import com.directv.lcms.dto.Layout;
+import com.directv.lcms.dto.ScanTask;
 import com.directv.lcms.rest.controller.EncoderRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -11,7 +16,9 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -233,8 +240,8 @@ public class MultiViewerService {
     public ResponseEntity<String> updateLayoutofEncoder(String layoutId) {
 
         Encoder encoder = getEncoder(encoderId).get();
-        Layout layout  = getOutputLayout(layoutId).get();
-        List<Layout> layouts =  new ArrayList<>(Arrays.asList(layout));
+        Layout layout = getOutputLayout(layoutId).get();
+        List<Layout> layouts = new ArrayList<>(Arrays.asList(layout));
         encoder.setLayouts(layouts);
         encoderUrl = encoderUrl.replace("{id}", encoderId);
         EncoderRequest encoderRequest = new EncoderRequest(encoder);
