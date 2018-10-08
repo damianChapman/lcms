@@ -89,11 +89,11 @@ public class MultiViewerControllerV1 {
     @RequestMapping(value = "/multiviewer/tag/mosaic/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "Gets a TAG MCM-9000 mosaic.",
             notes = "")
-    private ResponseEntity<EncoderStatus> getMosaic(@ApiParam(value = "id of multiviewer mosaic.")
+    private ResponseEntity<String> getMosaic(@ApiParam(value = "id of multiviewer mosaic.")
                                                     @PathVariable String id) {
-        Optional<EncoderStatus> encoderStatus = multiViewerService.getMosaic(id);
-        if (encoderStatus.isPresent()) {
-            return ResponseEntity.ok(encoderStatus.get());
+        Optional<String> mosaic = multiViewerService.getMosaic(id);
+        if (mosaic.isPresent()) {
+            return ResponseEntity.ok(mosaic.get());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

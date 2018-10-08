@@ -48,7 +48,7 @@ public class MultiViewerControllerV1Test {
 
     @Test
     public void testGetMosaic() throws Exception {
-        StringBuilder stringBuilder = new StringBuilder("/api/v1/multiviewer/tag/mosaic/1234");
+        StringBuilder stringBuilder = new StringBuilder("/api/v1/multiviewer/tag/mosaic/1");
         mvc.perform(MockMvcRequestBuilders.get(stringBuilder.toString())
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isOk());

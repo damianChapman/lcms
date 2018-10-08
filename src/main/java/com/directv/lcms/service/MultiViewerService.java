@@ -9,6 +9,7 @@ import com.directv.lcms.dto.EncoderStatus;
 import com.directv.lcms.dto.Layout;
 import com.directv.lcms.dto.ScanTask;
 import com.directv.lcms.rest.controller.EncoderRequest;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +37,7 @@ import java.util.Optional;
 @Service
 public class MultiViewerService {
     private static final Logger log = LoggerFactory.getLogger(MultiViewerService.class);
+    public static final String ID = "{id}";
     public static final String OUTPUT_ID = "{output_id}";
 
     @Resource(name = "restTemplate")
@@ -86,21 +88,11 @@ public class MultiViewerService {
         restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(username, password));
     }
 
-    public Optional<EncoderStatus> getMosaic(String id) {
-        try {
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(mosaicUrl, String.class);
-            if (StringUtils.isNotBlank(responseEntity.getBody())) {
-                JSONObject jsonObject = new JSONObject(responseEntity.getBody());
-                EncoderStatus encoderStatus = objectMapper.readValue(jsonObject.get("EncoderStatus").toString(), EncoderStatus.class);
-                encoderStatus.setIp_address(mosaicAddress);
-                return Optional.of(encoderStatus);
-            } else {
-                return Optional.empty();
-            }
-        } catch (IOException e) {
-            log.error("Error getting multiviewer mosaic", e);
-        }
-        return Optional.empty();
+    public Optional<String> getMosaic(String id) {
+        String mosaic = mosaicUrl.replace(ID, id);
+        JSONObject mosaicJson = new JSONObject();
+        mosaicJson.put("url", mosaic);
+        return Optional.of(mosaicJson.toString());
     }
 
     public ResponseEntity<String> createScannerTask(ScanTask scanTask) {
